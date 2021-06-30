@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using webshop_gyakorlas.Models;
 
 namespace webshop_gyakorlas.ViewModels
 {
@@ -16,7 +17,8 @@ namespace webshop_gyakorlas.ViewModels
         [Required(ErrorMessage = "Please enter descreption")]
         public string Descreption { get; set; }
 
-        [Required(ErrorMessage = "Please choose brand logo")]
         public IFormFile Logo { get; set; }
+
+        public Brand Brand { get; set; }
     }
 }

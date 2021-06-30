@@ -1,18 +1,18 @@
 ﻿@model webshop_gyakorlas.ViewModels.BrandViewModel;
 @{
-    ViewData["Title"] = "Add Brand";
+    ViewData["Title"] = "Edit Brand";
 }
 
 <div class="row">
     <div class="col-12">
-        <h1 class="mb-5">Add Brand</h1>
+        <h1 class="mb-5">Edit Brand</h1>
     </div>
 
     <div class="col-12">
-        <form enctype="multipart/form-data" method="post" asp-controller="Brand" asp-action="Create">
+        <form enctype="multipart/form-data" method="post" asp-controller="Brand" asp-action="Edit" asp-route-id="@Model.Brand.Id">
             <div class="form-group">
                 <label class="control-label" asp-for="Name"></label>
-                <input class="form-control" type="text" asp-for="Name" />
+                <input class="form-control" type="text" asp-for="Name" value="@Model.Name" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
 
@@ -20,6 +20,7 @@
                 <label class="control-label" asp-for="Descreption"></label>
 
                 <textarea asp-for="Descreption" class="form-control">
+                    @Model.Descreption
                 </textarea>
 
                 <span asp-validation-for="Descreption" class="text-danger"></span>
@@ -38,7 +39,7 @@
             </div>
 
             <div class="form-group">
-                <input type="submit" class="btn btn-success" value="Add" />
+                <input type="submit" class="btn btn-success" value="Edit" />
                 <a asp-controller="Brand" asp-action="Index" class="btn btn-secondary">Back to list of brands</a>
             </div>
         </form>

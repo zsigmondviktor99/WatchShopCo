@@ -1,8 +1,30 @@
-﻿@model webshop_gyakorlas.Models.Brand;
+﻿@model webshop_gyakorlas.ViewModels.BrandViewModel;
 @{
-    ViewData["Title"] = "Add Brand";
+    ViewData["Title"] = Model.Name;
 }
 
 <div class="row">
-    <h1>@Model.Name</h1>
+    <div class="col-12 col-lg-6 my-auto text-center">
+        <img class="img-fluid mt-4 mt-lg-0" src="@Model.Brand.Logo" alt="@Model.Name" title="@Model.Name" />
+    </div>
+
+    <div class="col-12 col-lg-6">
+        <h1 class="text-center text-lg-left mt-4 mt-lg-0">@Model.Name</h1>
+
+        <hr />
+
+        <p class="text-justify">@Model.Descreption</p>
+
+        <a href="#" class="btn btn-primary w-100 my-1">See all @Model.Name watches</a>
+
+        @{
+            if (User.Identity.IsAuthenticated && User.IsInRole(RoleName.Admin))
+            {
+                <a asp-controller="Brand" asp-action="Edit" asp-route-id="@Model.Brand.Id" class="btn btn-warning w-100 my-1">Edit</a>
+
+                //TODO: Kerdezzen vissza
+                <a asp-controller="Brand" asp-action="Delete" asp-route-id="@Model.Brand.Id" class="btn btn-danger w-100 my-1">Delete</a>
+            }
+        }
+    </div>
 </div>

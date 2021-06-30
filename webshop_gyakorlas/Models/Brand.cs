@@ -18,7 +18,6 @@ namespace webshop_gyakorlas.Models
         [Required(ErrorMessage = "Please enter descreption")]
         public string Descreption { get; set; }
 
-        [Required(ErrorMessage = "Please choose brand logo")]
         public string Logo { get; set; }
     }
 }

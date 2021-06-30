@@ -38,8 +38,14 @@ namespace webshop_gyakorlas.Controllers
 
             if (brand != null)
             {
-                //TODO: Brandet atrakni BrandViewModelbe
-                return View(brand);
+                BrandViewModel brandViewModel = new BrandViewModel()
+                {
+                    Name = brand.Name,
+                    Descreption = brand.Descreption,
+                    Brand = brand
+                };
+
+                return View(brandViewModel);
             }
             else
             {
@@ -62,7 +68,16 @@ namespace webshop_gyakorlas.Controllers
         {
             if (ModelState.IsValid)
             {
-                string fileName = UploadFile(brandViewModel);
+                string fileName;
+
+                if (brandViewModel.Logo == null)
+                {
+                    fileName = "/images/noimage.png";
+                }
+                else
+                {
+                    fileName = UploadFile(brandViewModel);
+                }
 
                 Brand brand = new Brand()
                 {
@@ -76,15 +91,66 @@ namespace webshop_gyakorlas.Controllers
             }
 
             return RedirectToAction("Index", "Brand");
+        }
 
-            /*try
+        // GET: BrandController/Edit/5
+        [Authorize(Roles = RoleName.Admin)]
+        public ActionResult Edit(int id)
+        {
+            Brand brand = _context.Brands.ToList().Find(b => b.Id == id);
+
+            if (brand != null)
             {
-                return RedirectToAction(nameof(Index));
+                BrandViewModel brandViewModel = new BrandViewModel()
+                {
+                    Name = brand.Name,
+                    Descreption = brand.Descreption,
+                    Brand = brand
+                };
+
+                return View(brandViewModel);
             }
-            catch
+            else
             {
-                return View();
-            }*/
+                return RedirectToAction("Index", "Brand");
+            }
+        }
+
+        // POST: BrandController/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = RoleName.Admin)]
+        public ActionResult Edit(BrandViewModel brandViewModel, int id)
+        {
+            Brand brand = _context.Brands.ToList().Find(b => b.Id == id);
+
+            if (brandViewModel.Logo != null)
+            {
+                brand.Logo = UploadFile(brandViewModel);
+            }
+
+            brand.Name = brandViewModel.Name;
+            brand.Descreption = brandViewModel.Descreption;
+
+            _context.Brands.Update(brand);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Brand");
+        }
+
+        // GET: BrandController/Delete/5
+        [Authorize(Roles = RoleName.Admin)]
+        public ActionResult Delete(int id)
+        {
+            Brand brand = _context.Brands.ToList().Find(b => b.Id == id);
+
+            if (brand != null)
+            {
+                _context.Brands.Remove(brand);
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("Index", "Brand");
         }
 
         private string UploadFile(BrandViewModel brandViewModel)
@@ -105,52 +171,6 @@ namespace webshop_gyakorlas.Controllers
             }
 
             return "/images/brands/" + fileName;
-        }
-
-        // GET: BrandController/Edit/5
-        [Authorize(Roles = RoleName.Admin)]
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: BrandController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = RoleName.Admin)]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: BrandController/Delete/5
-        [Authorize(Roles = RoleName.Admin)]
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: BrandController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = RoleName.Admin)]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
         }
     }
 }

@@ -20,7 +20,7 @@ namespace webshop_gyakorlas.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                //TODO: Get the connectionString from the JSON...
+                //TODO: connectionString a JSON-bon kene jojjon
                 optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=aspnet-webshop_gyakorlas-8A29A5CD-3B6B-4288-8BCD-A3FEC36273C9;Trusted_Connection=True;MultipleActiveResultSets=true");
             }
         }
