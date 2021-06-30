@@ -6,16 +6,16 @@
 
 <div class="row">
     <div class="col-12">
-        <h1><b>Brands</b></h1>
+        <h1>Brands</h1>
     </div>
 
     @{           
         foreach (Brand brand in Model)
         {
             <div class="col-12 col-sm-6 col-md-4">
-                    <h2>
+                    <h3>
                         @brand.Name
-                    </h2>
+                    </h3>
             </div>
         }
     }

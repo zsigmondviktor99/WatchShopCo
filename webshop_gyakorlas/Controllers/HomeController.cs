@@ -15,12 +15,9 @@ namespace webshop_gyakorlas.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public ApplicationDbContext _context;
-
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            _context = new ApplicationDbContext();
         }
 
         public IActionResult Index()
@@ -36,12 +33,6 @@ namespace webshop_gyakorlas.Controllers
         public IActionResult Contact()
         {
             return View();
-        }
-
-        public IActionResult Brands()
-        {
-            List<Brand> brands = _context.Brands.ToList().OrderBy(b => b.Name).ToList();
-            return View(brands);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -85,7 +85,6 @@ C:\Users\Dell 5480\Desktop\School\~prog_otthon\C#\webshop_gyakorlas\webshop_gyak
 C:\Users\Dell 5480\Desktop\School\~prog_otthon\C#\webshop_gyakorlas\webshop_gyakorlas\obj\Debug\net5.0\ref\webshop_gyakorlas.dll
 C:\Users\Dell 5480\Desktop\School\~prog_otthon\C#\webshop_gyakorlas\webshop_gyakorlas\obj\Debug\net5.0\webshop_gyakorlas.pdb
 C:\Users\Dell 5480\Desktop\School\~prog_otthon\C#\webshop_gyakorlas\webshop_gyakorlas\obj\Debug\net5.0\webshop_gyakorlas.genruntimeconfig.cache
-C:\Users\Dell 5480\Desktop\School\~prog_otthon\C#\webshop_gyakorlas\webshop_gyakorlas\obj\Debug\net5.0\Razor\Views\Home\Brands.cshtml.g.cs
 C:\Users\Dell 5480\Desktop\School\~prog_otthon\C#\webshop_gyakorlas\webshop_gyakorlas\bin\Debug\net5.0\Microsoft.AspNetCore.Razor.Language.dll
 C:\Users\Dell 5480\Desktop\School\~prog_otthon\C#\webshop_gyakorlas\webshop_gyakorlas\bin\Debug\net5.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\Dell 5480\Desktop\School\~prog_otthon\C#\webshop_gyakorlas\webshop_gyakorlas\bin\Debug\net5.0\Microsoft.CodeAnalysis.dll
@@ -201,3 +200,9 @@ C:\Users\Dell 5480\Desktop\School\~prog_otthon\C#\webshop_gyakorlas\webshop_gyak
 C:\Users\Dell 5480\Desktop\School\~prog_otthon\C#\webshop_gyakorlas\webshop_gyakorlas\obj\Debug\net5.0\Razor\Areas\Identity\Pages\Error.cshtml.g.cs
 C:\Users\Dell 5480\Desktop\School\~prog_otthon\C#\webshop_gyakorlas\webshop_gyakorlas\obj\Debug\net5.0\Razor\Views\Role\Create.cshtml.g.cs
 C:\Users\Dell 5480\Desktop\School\~prog_otthon\C#\webshop_gyakorlas\webshop_gyakorlas\obj\Debug\net5.0\Razor\Views\Role\Index.cshtml.g.cs
+C:\Users\Dell 5480\Desktop\School\~prog_otthon\C#\webshop_gyakorlas\webshop_gyakorlas\obj\Debug\net5.0\Razor\Views\Shared\_NavbarAdmin.cshtml.g.cs
+C:\Users\Dell 5480\Desktop\School\~prog_otthon\C#\webshop_gyakorlas\webshop_gyakorlas\obj\Debug\net5.0\Razor\Views\Shared\_NavbarAuth.cshtml.g.cs
+C:\Users\Dell 5480\Desktop\School\~prog_otthon\C#\webshop_gyakorlas\webshop_gyakorlas\obj\Debug\net5.0\Razor\Views\Shared\_NavbarNotAuth.cshtml.g.cs
+C:\Users\Dell 5480\Desktop\School\~prog_otthon\C#\webshop_gyakorlas\webshop_gyakorlas\obj\Debug\net5.0\Razor\Views\Brand\Index.cshtml.g.cs
+C:\Users\Dell 5480\Desktop\School\~prog_otthon\C#\webshop_gyakorlas\webshop_gyakorlas\obj\Debug\net5.0\Razor\Views\Brand\Create.cshtml.g.cs
+C:\Users\Dell 5480\Desktop\School\~prog_otthon\C#\webshop_gyakorlas\webshop_gyakorlas\obj\Debug\net5.0\Razor\Views\Shop\Create.cshtml.g.cs
