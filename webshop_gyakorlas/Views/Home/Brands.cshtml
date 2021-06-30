@@ -1,0 +1,22 @@
+﻿@model List<Brand>;
+
+@{
+    ViewData["Title"] = "F.A.Q.";
+}
+
+<div class="row">
+    <div class="col-12">
+        <h1><b>Brands</b></h1>
+    </div>
+
+    @{           
+        foreach (Brand brand in Model)
+        {
+            <div class="col-12 col-sm-6 col-md-4">
+                    <h2>
+                        @brand.Name
+                    </h2>
+            </div>
+        }
+    }
+</div>
