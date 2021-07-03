@@ -16,9 +16,9 @@ namespace webshop_gyakorlas.Controllers
     public class BrandController : Controller
     {
         public ApplicationDbContext _context;
-        private IHostingEnvironment _environment;
+        private IWebHostEnvironment _environment;
 
-        public BrandController(IHostingEnvironment environment)
+        public BrandController(IWebHostEnvironment environment)
         {
             _context = new ApplicationDbContext();
             _environment = environment;
@@ -72,7 +72,7 @@ namespace webshop_gyakorlas.Controllers
 
                 if (brandViewModel.Logo == null)
                 {
-                    fileName = "/images/noimage.png";
+                    fileName = Path.Combine(Path.DirectorySeparatorChar.ToString(), "images", "noimage.png");
                 }
                 else
                 {
@@ -126,6 +126,7 @@ namespace webshop_gyakorlas.Controllers
 
             if (brandViewModel.Logo != null)
             {
+                DeleteFile(brand.Logo);
                 brand.Logo = UploadFile(brandViewModel);
             }
 
@@ -146,6 +147,11 @@ namespace webshop_gyakorlas.Controllers
 
             if (brand != null)
             {
+                if (!brand.Logo.Contains("noimage.png"))
+                {
+                    DeleteFile(brand.Logo);
+                }
+
                 _context.Brands.Remove(brand);
                 _context.SaveChanges();
             }
@@ -170,7 +176,12 @@ namespace webshop_gyakorlas.Controllers
                 }
             }
 
-            return "/images/brands/" + fileName;
+            return Path.Combine(Path.DirectorySeparatorChar.ToString(), "images", "brands", fileName);
+        }
+
+        private void DeleteFile(string logoPath)
+        {
+            System.IO.File.Delete(_environment.WebRootPath + logoPath);
         }
     }
 }
