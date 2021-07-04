@@ -9,6 +9,7 @@ namespace webshop_gyakorlas.Controllers
 {
     public class RoleController : Controller
     {
+        #region Alprogramok
         /*public RoleManager<IdentityRole> roleManager;
 
         public RoleController(RoleManager<IdentityRole> roleManager)
@@ -33,5 +34,6 @@ namespace webshop_gyakorlas.Controllers
             await roleManager.CreateAsync(role);
             return RedirectToAction("Index");
         }*/
+        #endregion
     }
 }

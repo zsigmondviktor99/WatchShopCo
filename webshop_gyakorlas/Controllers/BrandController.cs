@@ -15,15 +15,20 @@ namespace webshop_gyakorlas.Controllers
 {
     public class BrandController : Controller
     {
+        #region Adattagok
         public ApplicationDbContext _context;
         private IWebHostEnvironment _environment;
+        #endregion
 
+        #region Konstruktor
         public BrandController(IWebHostEnvironment environment)
         {
             _context = new ApplicationDbContext();
             _environment = environment;
         }
+        #endregion
 
+        #region Alprogramok
         // GET: BrandController
         public ActionResult Index()
         {
@@ -183,5 +188,6 @@ namespace webshop_gyakorlas.Controllers
         {
             System.IO.File.Delete(_environment.WebRootPath + logoPath);
         }
+        #endregion
     }
 }
