@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,7 @@ namespace webshop_gyakorlas.Controllers
         {
             _context = new ApplicationDbContext();
             _environment = environment;
+            WatchViewModelForShopIndex.WwwrootPath = _environment.WebRootPath;
         }
         #endregion
 
@@ -35,19 +37,33 @@ namespace webshop_gyakorlas.Controllers
         {
             List<Watch> watches = _context.Wathces.Include(w => w.Brand).ToList();
             List<WatchViewModelForShopIndex> watchViewModelForShopIndices = new List<WatchViewModelForShopIndex>();
-            WatchViewModelForShopIndex.WwwrootPath = _environment.WebRootPath;
 
             foreach (Watch watch in watches)
             {
                 watchViewModelForShopIndices.Add(new WatchViewModelForShopIndex() { Watch = watch});
             }
+
             return View(watchViewModelForShopIndices);
         }
 
         // GET: ShopController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            Watch watch = _context.Wathces.Include(w => w.Brand).ToList().Find(w => w.Id == id);
+
+            if (watch != null)
+            {
+                WatchViewModelForShopIndex watchViewModelForShopIndex = new WatchViewModelForShopIndex()
+                {
+                    Watch = watch
+                };
+
+                return View(watchViewModelForShopIndex);
+            }
+            else
+            {
+                return View("Error");
+            }
         }
 
         // GET: ShopController/Create
@@ -56,7 +72,10 @@ namespace webshop_gyakorlas.Controllers
         {
             WatchViewModel watchViewModel = new WatchViewModel()
             {
-                Brands = _context.Brands.ToList().OrderBy(b => b.Name).ToList()
+                Brands = _context.Brands.Select(b => new SelectListItem {
+                    Value = b.Id.ToString(),
+                    Text = b.Name
+                }).ToList().OrderBy(b => b.Text).ToList()
             };
 
             return View(watchViewModel);
@@ -68,38 +87,9 @@ namespace webshop_gyakorlas.Controllers
         [Authorize(Roles = RoleName.Admin)]
         public ActionResult Create(WatchViewModel watchViewModel)
         {
-            /*if (ModelState.IsValid)
-            {
-                string filesPath;
-
-                if (watchViewModel.Images.Count == 0)
-                {
-                    filesPath = Path.Combine(Path.DirectorySeparatorChar.ToString(), "images", "noimage.png");
-                }
-                else
-                {
-                    filesPath = UploadFiles(watchViewModel);
-                }
-
-                Watch watch = new Watch()
-                {
-                    ReferenceNumber = watchViewModel.ReferenceNumber,
-                    BrandId = watchViewModel.BrandId,
-                    Model = watchViewModel.Model,
-                    Price = watchViewModel.Price,
-                    Serviced = watchViewModel.Serviced,
-                    YearOfProduction = watchViewModel.YearOfProduction,
-                    Description = watchViewModel.Description,
-                    ImagesPath = filesPath
-                };
-
-                _context.Wathces.Add(watch);
-                _context.SaveChanges();
-            }*/
-
             string filesPath;
 
-            if (watchViewModel.Images.Count == 0)
+            if (watchViewModel.Images == null)
             {
                 filesPath = Path.Combine(Path.DirectorySeparatorChar.ToString(), "images", "noimage.png");
             }
@@ -130,46 +120,84 @@ namespace webshop_gyakorlas.Controllers
         [Authorize(Roles = RoleName.Admin)]
         public ActionResult Edit(int id)
         {
-            return View();
+            Watch watch = _context.Wathces.Include(w => w.Brand).ToList().Find(w => w.Id == id);
+
+            if (watch != null)
+            {
+                WatchViewModel watchViewModel = new WatchViewModel()
+                {
+                    Watch = watch,
+                    ReferenceNumber = watch.ReferenceNumber,
+                    Model = watch.Model,
+                    Price = watch.Price,
+                    YearOfProduction = watch.YearOfProduction,
+                    Description = watch.Description,
+                    Serviced = watch.Serviced,
+                    Brands = _context.Brands.Select(b => new SelectListItem
+                    {
+                        Value = b.Id.ToString(),
+                        Text = b.Name,
+                    }).ToList().OrderBy(b => b.Text).ToList(),
+                    SelectedTag = watch.BrandId
+                };
+
+                return View(watchViewModel);
+            }
+            else
+            {
+                return View("Error");
+            }
         }
 
         // POST: ShopController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = RoleName.Admin)]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(WatchViewModel watchViewModel, int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+            Watch watch = _context.Wathces.Include(w => w.Brand).ToList().Find(w => w.Id == id);
 
-        // GET: ShopController/Delete/5
-        [Authorize(Roles = RoleName.Admin)]
-        public ActionResult Delete(int id)
-        {
-            return View();
+            if (watchViewModel.Images != null)
+            {
+                //TODO: kepek update kitalalni
+            }
+
+            watch.ReferenceNumber = watchViewModel.ReferenceNumber;
+            watch.Model = watchViewModel.Model;
+            watch.Price = watchViewModel.Price;
+            watch.YearOfProduction = watchViewModel.YearOfProduction;
+            watch.Description = watchViewModel.Description;
+            watch.Serviced = watchViewModel.Serviced;
+            watch.BrandId = watchViewModel.SelectedTag;
+
+            _context.Wathces.Update(watch);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Shop");
         }
 
         // POST: ShopController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         [Authorize(Roles = RoleName.Admin)]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id)
         {
-            try
+            Watch watch = _context.Wathces.Include(w => w.Brand).ToList().Find(w => w.Id == id);
+
+            if (watch != null)
             {
-                return RedirectToAction(nameof(Index));
+                if (!watch.ImagesPath.Contains("noimage"))
+                {
+                    //WatchViewModelForShopIndex tipus tulajdonsagaival konnyebb lekerdezni a kepek utjait
+                    WatchViewModelForShopIndex watchViewModelForShopIndex = new WatchViewModelForShopIndex()
+                    {
+                        Watch = watch
+                    };
+                    DeleteFiles(watchViewModelForShopIndex.ImagesPaths, watch.ImagesPath);
+                }
+                _context.Wathces.Remove(watch);
+                _context.SaveChanges();
             }
-            catch
-            {
-                return View();
-            }
+
+            return RedirectToAction("Index", "Shop");
         }
 
         private string UploadFiles(WatchViewModel watchViewModel)
@@ -178,51 +206,37 @@ namespace webshop_gyakorlas.Controllers
 
             if (watchViewModel.Images.Count > 0)
             {
-                //TODO: nem jo a szervizeltseg allapot + mappa helyett filet hoz letre
                 string uploadFolder = Path.Combine(_environment.WebRootPath, "images", "products");
 
-                imagesPath = /*watchViewModel.Brand.Name + "_" + */watchViewModel.Model + "_" + watchViewModel.ReferenceNumber + "_" + Guid.NewGuid();
+                imagesPath = watchViewModel.Model + "_" + watchViewModel.ReferenceNumber + "_" + Guid.NewGuid();
                 string filesPath = Path.Combine(uploadFolder, imagesPath);
 
                 Directory.CreateDirectory(filesPath);
-                //var fileStream = new FileStream(Path.Combine(Path.DirectorySeparatorChar.ToString(), imagesPath), FileMode.Create);
-                //var fileStream = new FileStream(filesPath, FileMode.Create);
                 FileStream fileStream = null;
 
                 foreach (IFormFile image in watchViewModel.Images)
                 {
-                    /*using (var fileStream = new FileStream(filesPath, FileMode.Create))
-                    {
-                        image.CopyTo(fileStream);
-                    }*/
-
-                    //fileStream = new FileStream(Path.Combine(filesPath, image.FileName), FileMode.Create);
-                    //fileStream = new FileStream(filesPath, FileMode.Create);
-
                     string filePath = Path.Combine(filesPath, image.FileName);
 
                     fileStream = System.IO.File.Create(filePath);
                     image.CopyTo(fileStream);
 
-                    /*using (var fileStream = System.IO.File.Create(filesPath))
-                    {
-                        image.CopyTo(fileStream);
-                        fileStream.Flush();
-                    }*/
-
                     fileStream.Close();
                 }
 
-                //fileStream.Close();
+                fileStream.Dispose();
             }
 
             return Path.Combine(Path.DirectorySeparatorChar.ToString(), "images", "products", imagesPath);
         }
 
-        private void DeleteFiles(string imagesPath)
+        private void DeleteFiles(string[] imagesPaths, string imagesPath)
         {
-            //TODO: Implementalni
-            System.IO.File.Delete(_environment.WebRootPath + imagesPath);
+            foreach (string path in imagesPaths)
+            {
+                System.IO.File.Delete(_environment.WebRootPath + path);
+            }
+            Directory.Delete(_environment.WebRootPath + imagesPath);
         }
         #endregion
     }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -38,6 +39,8 @@ namespace webshop_gyakorlas.ViewModels
 
         public Watch Watch { get; set; }
 
-        public List<Brand> Brands { get; set; }
+        public List<SelectListItem> Brands { get; set; }
+
+        public int SelectedTag { get; set; }
     }
 }

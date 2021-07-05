@@ -25,33 +25,78 @@ namespace webshop_gyakorlas.ViewModels
         {
             get
             {
-                string[] imagesPath = Directory.GetFiles(WwwrootPath + Watch.ImagesPath);
-                string[] firstImagePathParts;
-
-                try
+                if (Watch.ImagesPath.Contains("noimage"))
                 {
-                    firstImagePathParts = imagesPath.First(p => p.Contains("main")).Split(Path.DirectorySeparatorChar);
+                    return Watch.ImagesPath;
                 }
-                catch
+                else
                 {
-                    firstImagePathParts = imagesPath[0].Split(Path.DirectorySeparatorChar);
+                    string[] imagesPath = Directory.GetFiles(WwwrootPath + Watch.ImagesPath);
+                    string[] firstImagePathParts;
+
+                    try
+                    {
+                        firstImagePathParts = imagesPath.First(p => p.Contains("main")).Split(Path.DirectorySeparatorChar);
+                    }
+                    catch
+                    {
+                        firstImagePathParts = imagesPath[0].Split(Path.DirectorySeparatorChar);
+                    }
+
+                    int wwwrootindex = 0;
+
+                    while (wwwrootindex < firstImagePathParts.Length && firstImagePathParts[wwwrootindex] != "wwwroot")
+                    {
+                        wwwrootindex++;
+                    }
+
+                    string firstImagePath = "";
+
+                    for (int i = wwwrootindex + 1; i < firstImagePathParts.Length; i++)
+                    {
+                        firstImagePath += Path.DirectorySeparatorChar.ToString() + firstImagePathParts[i];
+                    }
+
+                    return firstImagePath;
                 }
+            }
+        }
 
-                int wwwrootindex = 0;
-
-                while (wwwrootindex < firstImagePathParts.Length && firstImagePathParts[wwwrootindex] != "wwwroot")
+        public string[] ImagesPaths
+        {
+            get
+            {
+                if (Watch.ImagesPath.Contains("noimage"))
                 {
-                    wwwrootindex++;
+                    return new string[] { Watch.ImagesPath };
                 }
-
-                string firstImagePath = "";
-
-                for (int i = wwwrootindex + 1; i < firstImagePathParts.Length; i++)
+                else
                 {
-                    firstImagePath += Path.DirectorySeparatorChar.ToString() + firstImagePathParts[i];
-                }
+                    string[] imagesPath = Directory.GetFiles(WwwrootPath + Watch.ImagesPath);
 
-                return firstImagePath;
+                    for (int i = 0; i < imagesPath.Length; i++)
+                    {
+                        string[] actualImagePathParts = imagesPath[i].Split(Path.DirectorySeparatorChar);
+
+                        int wwwrootindex = 0;
+
+                        while (wwwrootindex < actualImagePathParts.Length && actualImagePathParts[wwwrootindex] != "wwwroot")
+                        {
+                            wwwrootindex++;
+                        }
+
+                        string actualImagePath = "";
+
+                        for (int j = wwwrootindex + 1; j < actualImagePathParts.Length; j++)
+                        {
+                            actualImagePath += Path.DirectorySeparatorChar.ToString() + actualImagePathParts[j];
+                        }
+
+                        imagesPath[i] = actualImagePath;
+                    }
+
+                    return imagesPath;
+                }   
             }
         }
     }

@@ -54,7 +54,7 @@ namespace webshop_gyakorlas.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Brand");
+                return View("Error");
             }
         }
 
@@ -117,7 +117,7 @@ namespace webshop_gyakorlas.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Brand");
+                return View("Error");
             }
         }
 

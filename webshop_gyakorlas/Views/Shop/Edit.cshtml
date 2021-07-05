@@ -1,0 +1,94 @@
+﻿@model webshop_gyakorlas.ViewModels.WatchViewModel;
+@{
+    ViewData["Title"] = "Edit Product";
+}
+
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-5">Edit Product</h1>
+    </div>
+
+    <div class="col-12">
+        <form enctype="multipart/form-data" method="post" asp-controller="Shop" asp-action="Edit">
+            <div class="form-group">
+                <label class="control-label" asp-for="ReferenceNumber"></label>
+                <input class="form-control" type="text" asp-for="ReferenceNumber" value="@Model.ReferenceNumber" />
+                <span asp-validation-for="ReferenceNumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" asp-for="BrandId">Brand</label>
+                <!--<select class="form-control" asp-for="BrandId" asp-items="@(new SelectList(Model.Brands, "Id", "Name"))">-->
+                <select class="form-control" asp-for="SelectedTag" asp-items="@(new SelectList(Model.Brands, "Value", "Text"))">
+                </select>
+
+                <span asp-validation-for="BrandId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" asp-for="Model"></label>
+                <input class="form-control" type="text" asp-for="Model" value="@Model.Model" />
+                <span asp-validation-for="Model" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" asp-for="Price"></label>
+                <input class="form-control" type="number" asp-for="Price" value="@Model.Price" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" asp-for="YearOfProduction"></label>
+                <input class="form-control" type="number" asp-for="YearOfProduction" min="1901" value="@Model.YearOfProduction" />
+                <span asp-validation-for="YearOfProduction" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" asp-for="Description"></label>
+
+                <textarea asp-for="Description" class="form-control">
+                    @Model.Description
+                </textarea>
+
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Images" class="control-label">Images</label>
+
+                <div class="custom-file">
+                    <input asp-for="Images" class="custom-file-input" id="custom-file" multiple="multiple" />
+
+                    <label class="custom-file-label" for="customFile">Choose file (if one of the file names contains 'main', that will be the main picture)</label>
+                </div>
+
+                <span asp-validation-for="Images" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="checkbox" asp-for="Serviced" checked="@Model.Serviced" />
+                <label class="control-label" asp-for="Serviced"></label>
+                <span asp-validation-for="Serviced" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" class="btn btn-success" value="Update" />
+                <a asp-controller="Shop" asp-action="Index" class="btn btn-secondary">Back to list of products</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+
+    <script type="text/javascript">
+
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
+}
+

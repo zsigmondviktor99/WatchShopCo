@@ -18,7 +18,8 @@
 
             <div class="form-group">
                 <label class="control-label" asp-for="BrandId">Brand</label>
-                <select class="form-control" asp-for="BrandId" asp-items="@(new SelectList(Model.Brands, "Id", "Name"))">
+                <!--<select class="form-control" asp-for="BrandId" asp-items="@(new SelectList(Model.Brands, "Id", "Name"))">-->
+                <select class="form-control" asp-for="BrandId" asp-items="@(new SelectList(Model.Brands, "Value", "Text"))">
                 </select>
 
                 <span asp-validation-for="BrandId" class="text-danger"></span>
@@ -64,7 +65,7 @@
             </div>
 
             <div class="form-group">
-                <input type="checkbox" asp-for="Serviced" value="Serviced" />
+                <input type="checkbox" asp-for="Serviced" />
                 <label class="control-label" asp-for="Serviced"></label>
                 <span asp-validation-for="Serviced" class="text-danger"></span>
             </div>
