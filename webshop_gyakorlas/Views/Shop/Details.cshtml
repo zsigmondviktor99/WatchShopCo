@@ -76,12 +76,19 @@
         <p class="text-justify">@Model.Watch.Description</p>
 
         @{
-            if (User.Identity.IsAuthenticated && User.IsInRole(RoleName.Admin))
+            if (User.Identity.IsAuthenticated)
             {
-                <a asp-controller="Shop" asp-action="Edit" asp-route-id="@Model.Watch.Id" class="btn btn-warning w-100 my-1">Edit</a>
+                if (User.IsInRole(RoleName.Admin))
+                {
+                    <a asp-controller="Shop" asp-action="Edit" asp-route-id="@Model.Watch.Id" class="btn btn-warning w-100 my-1">Edit</a>
 
-                //TODO: Kerdezzen vissza
-                <a asp-controller="Shop" asp-action="Delete" asp-route-id="@Model.Watch.Id" class="btn btn-danger w-100 my-1">Delete</a>
+                    //TODO: Kerdezzen vissza
+                    <a asp-controller="Shop" asp-action="Delete" asp-route-id="@Model.Watch.Id" class="btn btn-danger w-100 my-1">Delete</a>
+                }
+                else
+                {
+                    <a asp-controller="Cart" asp-action="AddItemToCart" asp-route-id="@Model.Watch.Id" class="btn btn-success w-100 my-1">Add to Cart</a>
+                }
             }
         }
     </div>

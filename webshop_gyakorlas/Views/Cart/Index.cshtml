@@ -1,0 +1,70 @@
+﻿@{
+    ViewData["Title"] = "Cart";
+}
+
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-5">Cart</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        @{
+            if (ViewBag.cart.Count == 0)
+            {
+                <h3>Your shopping cart is empty right now. :(</h3>
+            }
+            else
+            {
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Delete</th>
+                            <th>Brand</th>
+                            <th>Model</th>
+                            <th>Reference number</th>
+                            <th>Year</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @{
+                            if (ViewBag.cart.Count == 0)
+                            {
+                                <h3>Your shopping cart is empty right now :(</h3>
+                            }
+                            else
+                            {
+                                foreach (Watch watch in ViewBag.cart)
+                                {
+                                    <tr>
+                                        <td><a asp-controller="Cart" asp-action="RemoveItemFromCart" asp-route-id="@watch.Id">Delete</a></td>
+                                        <td></td>
+                                        <td>@watch.Model</td>
+                                        <td>@watch.ReferenceNumber</td>
+                                        <td>@watch.YearOfProduction</td>
+                                        <td>@String.Format("{0:N0}", watch.Price) Ft</td>
+                                    </tr>
+                                }
+
+                                <tr>
+                                    <td align="right" colspan="6">Total: @String.Format("{0:N0}", ViewBag.total) Ft</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            }
+        }
+
+        <a asp-controller="Shop" asp-action="Index" class="btn btn-primary">Continue Shopping</a>
+        @{
+            if (ViewBag.cart.Count > 0)
+            {
+                <a asp-controller="Checkout" asp-action="Index" class="btn btn-success">Checkout</a>
+            }
+        }
+    </div>
+</div>

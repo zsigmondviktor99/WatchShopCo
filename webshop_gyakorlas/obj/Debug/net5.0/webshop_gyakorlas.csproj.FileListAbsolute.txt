@@ -210,3 +210,4 @@ C:\Users\Dell 5480\Desktop\School\~prog_otthon\C#\webshop_gyakorlas\webshop_gyak
 C:\Users\Dell 5480\Desktop\School\~prog_otthon\C#\webshop_gyakorlas\webshop_gyakorlas\obj\Debug\net5.0\Razor\Views\Brand\Edit.cshtml.g.cs
 C:\Users\Dell 5480\Desktop\School\~prog_otthon\C#\webshop_gyakorlas\webshop_gyakorlas\obj\Debug\net5.0\Razor\Views\Shop\Details.cshtml.g.cs
 C:\Users\Dell 5480\Desktop\School\~prog_otthon\C#\webshop_gyakorlas\webshop_gyakorlas\obj\Debug\net5.0\Razor\Views\Shop\Edit.cshtml.g.cs
+C:\Users\Dell 5480\Desktop\School\~prog_otthon\C#\webshop_gyakorlas\webshop_gyakorlas\obj\Debug\net5.0\Razor\Views\Cart\Index.cshtml.g.cs
