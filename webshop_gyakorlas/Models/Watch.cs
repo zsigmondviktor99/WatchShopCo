@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using webshop_gyakorlas.Helpers;
 
 namespace webshop_gyakorlas.Models
 {
@@ -34,5 +35,9 @@ namespace webshop_gyakorlas.Models
         public string Description { get; set; }
 
         public string ImagesPath { get; set; }
+
+        public DateTime AddedToShop { get; set; }
+
+        public bool Sold { get; set; }
     }
 }

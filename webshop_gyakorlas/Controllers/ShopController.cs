@@ -35,7 +35,7 @@ namespace webshop_gyakorlas.Controllers
         // GET: ShopController
         public ActionResult Index()
         {
-            List<Watch> watches = _context.Wathces.Include(w => w.Brand).ToList();
+            List<Watch> watches = _context.Wathces.Include(w => w.Brand).ToList().OrderByDescending(w => w.AddedToShop).ToList();
             List<WatchViewModelForShopIndex> watchViewModelForShopIndices = new List<WatchViewModelForShopIndex>();
 
             foreach (Watch watch in watches)
@@ -107,7 +107,9 @@ namespace webshop_gyakorlas.Controllers
                 Serviced = watchViewModel.Serviced,
                 YearOfProduction = watchViewModel.YearOfProduction,
                 Description = watchViewModel.Description,
-                ImagesPath = filesPath
+                ImagesPath = filesPath,
+                AddedToShop = DateTime.Now,
+                Sold = false
             };
 
             _context.Wathces.Add(watch);

@@ -1,0 +1,39 @@
+﻿<div class="row">
+    <div class="col-12">
+        <h1 class="mb-5">Order Details (@ViewBag.order.Id)</h1>
+    </div>
+
+    <table class="table">
+        <thead class="thead-light">
+            <tr>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>Reference number</th>
+                <th>Year</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @{
+                foreach (Watch watch in ViewBag.orderedWatches)
+                {
+                    <tr>
+                        <td>Brand</td>
+                        <td>@watch.Model</td>
+                        <td>@watch.ReferenceNumber</td>
+                        <td>@watch.YearOfProduction</td>
+                        <td>@String.Format("{0:N0}", watch.Price) Ft</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+    <a asp-controller="" asp-action="" asp-route-id="" class="btn btn-warning w-100 my-1">Edit Order</a>
+
+    @{
+        //TODO: Kerdezzen vissza
+    }
+    <a asp-controller="Order" asp-action="Delete" asp-route-id="@ViewBag.order.Id" class="btn btn-danger w-100 my-1">Delete Order</a>
+</div>

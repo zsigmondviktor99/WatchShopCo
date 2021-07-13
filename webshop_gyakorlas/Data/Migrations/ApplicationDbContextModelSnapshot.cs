@@ -239,12 +239,48 @@ namespace webshop_gyakorlas.Data.Migrations
                     b.ToTable("Brands");
                 });
 
+            modelBuilder.Entity("webshop_gyakorlas.Models.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Arrived")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("CustomerId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("GivenToCourier")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Packed")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("TimeOfOrder")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Total")
+                        .HasColumnType("int");
+
+                    b.Property<string>("WatchesJson")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Orders");
+                });
+
             modelBuilder.Entity("webshop_gyakorlas.Models.Watch", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("AddedToShop")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("BrandId")
                         .HasColumnType("int");
@@ -264,9 +300,13 @@ namespace webshop_gyakorlas.Data.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("ReferenceNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Serviced")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Sold")
                         .HasColumnType("bit");
 
                     b.Property<long>("YearOfProduction")

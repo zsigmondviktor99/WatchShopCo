@@ -1,0 +1,59 @@
+﻿<div class="row">
+    <div class="col-12">
+        <h1 class="mb-5">Orders</h1>
+
+        <table class="table table-striped">
+            <thead class="thead-light">
+                <tr>
+                    <th>Id</th>
+                    <th>Total</th>
+                    <th>Packed</th>
+                    <th>Given to Courier</th>
+                    <th>Shipped</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @{
+                    foreach (Order order in ViewBag.orders)
+                    {
+                        <tr>
+                            <td>@order.Id</td>
+                            <td>@String.Format("{0:N0}", order.Total) Ft</td>
+                            @{
+                                if (order.Packed)
+                                {
+                                    <td>Yes</td>    
+                                }
+                                else
+                                {
+                                    <td>No</td>    
+                                }
+
+                                if (order.GivenToCourier)
+                                {
+                                    <td>Yes</td>    
+                                }
+                                else
+                                {
+                                    <td>No</td>    
+                                }
+
+                                if (order.Arrived)
+                                {
+                                    <td>Yes</td>    
+                                }
+                                else
+                                {
+                                    <td>No</td>    
+                                }
+                            }
+                            <td><a asp-controller="Order" asp-action="Details" asp-route-id="@order.Id">Details</a></td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

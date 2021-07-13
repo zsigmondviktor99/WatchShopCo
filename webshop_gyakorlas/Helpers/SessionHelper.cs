@@ -21,6 +21,12 @@ namespace webshop_gyakorlas.Helpers
             return (value == null) ? default : JsonConvert.DeserializeObject<T>(value);
         }
 
+        //TODO: Altalanosabb helper osztalyba atrakni
+        public static T WatchesFromOrder<T>(Order order)
+        {
+            return JsonConvert.DeserializeObject<T>(order.WatchesJson);
+        }
+
         public static void TruncateSession(this ISession session)
         {
             session.Clear();

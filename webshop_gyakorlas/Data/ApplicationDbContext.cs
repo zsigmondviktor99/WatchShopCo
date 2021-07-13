@@ -32,6 +32,7 @@ namespace webshop_gyakorlas.Data
         #region Tulajdonsagok
         public DbSet<Watch> Wathces { get; set; }
         public DbSet<Brand> Brands { get; set; }
+        public DbSet<Order> Orders { get; set; }
         #endregion
     }
 }

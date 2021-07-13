@@ -42,5 +42,9 @@ namespace webshop_gyakorlas.ViewModels
         public List<SelectListItem> Brands { get; set; }
 
         public int SelectedTag { get; set; }
+
+        public DateTime AddedToShop { get; set; }
+
+        public bool Sold { get; set; }
     }
 }

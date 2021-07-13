@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using webshop_gyakorlas.Helpers;
 
 namespace webshop_gyakorlas.Areas.Identity.Pages.Account
 {
@@ -30,6 +31,7 @@ namespace webshop_gyakorlas.Areas.Identity.Pages.Account
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
+            SessionHelper.TruncateSession(HttpContext.Session);
             if (returnUrl != null)
             {
                 return LocalRedirect(returnUrl);
